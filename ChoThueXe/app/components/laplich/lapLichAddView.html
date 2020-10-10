@@ -1,0 +1,141 @@
+﻿<style>
+
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        border: 1px solid #000000;
+        vertical-align: middle;
+        text-align: center;
+        font-weight: bold
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    td {
+        padding: 0px;
+        border: solid 1px #000000;
+    }
+</style>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Thêm mới lịch
+    </h1>
+    <ol class="breadcrumb">
+        <li><a ui-sref="home"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a ui-sref="laplich">Lập lịch</a></li>
+        <li class="active">Thêm mới</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Thông tin lịch thêm</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" novalidate name="frmAddProductCategory" role="form" ng-submit="AddProductCategory()">
+            <div class="box-body">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tháng lên lịch</label>
+                        <div class="col-sm-10">
+                            <div class='input-group date'>
+                               
+                                <input type="month" name="month" required class="form-control" ng-model="thang" ng-change="capnhatthang();CapNhatNgay()" ng-model-options="{timezone:'UTC'}">
+                            </div>
+                            <span ng-show="frmAddProductCategory.month.$error.required" class="invalid">Phải chọn tháng.</span>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Ngày dự kiến</label>
+                        <div class="col-sm-10">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" ng-disabled="frmAddProductCategory.month.$error.required" required type="radio" name="inlineRadioOptions" id="inlineRadio1" ng-model="luachonngay" ng-click="CapNhatNgay()" value="Nam">
+                                <label class="form-check-label" for="inlineRadio1">Tất cả các ngày trong tháng</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" data-toggle="modal" data-target="#myModal" ng-disabled="frmAddProductCategory.month.$error.required" required type="radio" name="inlineRadioOptions" id="inlineRadio2" ng-model="luachonngay" value="Nữ">
+                                <label class="form-check-label" for="inlineRadio2">Ngày cụ thể</label>
+                            </div>
+                            <div ng-hide="frmAddProductCategory.month.$error.required">
+                                <span ng-show="frmAddProductCategory.inlineRadioOptions.$error.required" class="invalid">Phải chọn ngày dự kiến.</span>
+                            </div>
+                            <span ng-show="NgayDaChon.length>0">Bạn đã chọn ngày: {{NgayDaChon}}.</span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table table-hover" border="1">
+                    <tr>
+                        <td colspan="2" class="bordertop ragiua" rowspan="2">Hạng xe</td>
+                        <td colspan="13" class="text-center bordertop "><b>Từ giờ đến giờ</b></td>
+
+                        <td colspan="2" rowspan="2" class="bordertop ">Tổng cộng</td>
+
+                    </tr>
+                    <tr>
+                        <td class="bordertop">7-8</td>
+                        <td class="bordertop">8-9</td>
+                        <td class="bordertop">9-10</td>
+                        <td class="bordertop">10-11</td>
+                        <td class="bordertop">11-12</td>
+                        <td class="bordertop">12-13</td>
+                        <td class="bordertop">13-14</td>
+                        <td class="bordertop">14-15</td>
+                        <td class="bordertop">15-16</td>
+                        <td class="bordertop">16-17</td>
+                        <td class="bordertop">17-18</td>
+                        <td class="bordertop">18-19</td>
+                        <td class="bordertop">19-20</td>
+                    </tr>
+                    <tbody ng-repeat="hangxe in tatCaXe">
+                        <tr class="bordertop" ng-repeat="i in hangxe.xe">
+                            <td class="bordertop " rowspan="{{hangxe.xe.length}}" ng-hide="$index>0">{{hangxe.Mahangxe}}</td>
+                            <td class="bordertop">{{i.Sttxe}} </td>
+                            <td class="bordertop" ng-repeat="item in danhsachcheckbox"><label><input type="checkbox" checklist-model="i.Gio" checklist-value="item" ng-change="check(item,i.Sttxe, checked)" /></label></td>
+                            <td class="bordertop"></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button ui-sref="laplich" class="btn btn-default">Hủy</button>
+                <button type="submit" ng-disabled="frmAddProductCategory.$invalid" class="btn btn-info">Lưu lại</button>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+    <!-- /.box -->
+</section><!-- /.content -->
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <form >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Chọn ngày cụ thể lên lịch</h4>
+                </div>
+                <div class="modal-body">
+                    <multiple-date-picker month="myMonth" ng-model-options="{timezone:'UTC'}" ng-model="myArrayOfDates" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnAccept" ng-click="CapNhatNgay()">Chấp nhận</button>
+                    <!--<button type="submit" class="btn btn-primary">Chấp nhận</button>-->
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="btnClose">Đóng</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

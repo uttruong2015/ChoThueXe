@@ -1,0 +1,91 @@
+﻿<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Chỉnh sửa phiếu đăng ký: {{productCategory.Sttphieu}}
+    </h1>
+    <ol class="breadcrumb">
+        <li><a ui-sref="home"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a ui-sref="phieudangky">Phiếu đăng ký</a></li>
+        <li class="active">Chỉnh sửa</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">{{productCategory.Sttphieu}}</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" novalidate name="frmUpdateProductCategory" role="form" ng-submit="UpdateProductCategory()">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Mã phiếu</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" disabled class="form-control" name="name" ng-model="productCategory.Sttphieu">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Khách hàng</label>
+                    <div class="col-sm-10">
+                        <select name="khachhang" required class="form-control" ng-model="productCategory.Maso" ng-options="option.Maso as option.Hotenkhach for option in tatCaKhach ">
+                            <option value="">- Chọn khách hàng -</option>
+                        </select>
+                        <span ng-show="frmAddProductCategory.khachhang.$invalid" class="invalid">Phải chọn khách hàng.</span>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Xe</label>
+                    <div class="col-sm-10">
+                        <select name="xe" required class="form-control" ng-model="productCategory.Sttxe" ng-options="option.Sttxe as option.Hieuxe+ ' ('+option.Mahangxe+')' + ' ('+option.Banso+')' for option in tatCaXe ">
+                            <option value="">- Chọn xe -</option>
+                        </select>
+                        <span ng-show="frmAddProductCategory.xe.$invalid" class="invalid">Phải chọn xe.</span>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Ngày sử dụng</label>
+
+                    <div class="col-sm-10">
+                        <input type="date" date-format class="form-control" required name="ngaysd" ng-model="productCategory.Ngaysd" placeholder="Chọn ngày sử dụng">
+                        <span ng-show="frmAddProductCategory.ngaysd.$invalid" class="invalid">Phải chọn ngày sử dụng.</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Từ giờ</label>
+
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" ng-maxlength="2" required name="tugio" ng-model="productCategory.Tugio" placeholder="Giờ bắt đầu">
+                        <span ng-show="frmAddProductCategory.tugio.$invalid" class="invalid">Phải nhập giờ bắt đầu.</span>
+                        <span ng-show="frmAddProductCategory.tugio.$error.maxlength" class="invalid">Chỉ nhập tối đa 2 ký tự.</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">Đến giờ</label>
+
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" ng-maxlength="2" required name="dengio" ng-model="productCategory.Dengio" placeholder="Giờ kết thúc">
+                        <span ng-show="frmAddProductCategory.dengio.$invalid" class="invalid">Phải nhập giờ kết thúc.</span>
+                        <span ng-show="frmAddProductCategory.dengio.$error.maxlength" class="invalid">Chỉ nhập tối đa 2 ký tự.</span>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button ui-sref="phieudangky" class="btn btn-default">Hủy</button>
+                <button type="submit" ng-disabled="frmUpdateProductCategory.$invalid" class="btn btn-info">Lưu lại</button>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+        
+    </div>
+    <!-- /.box -->
+</section><!-- /.content -->
